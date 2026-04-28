@@ -59,17 +59,31 @@ class DB_Map():
             coordinates = cursor.fetchone()
             return coordinates  # Şehrin koordinatlarını döndürme
 
-    def create_graph(self, path, cities):
-        ax = plt.axes(projection=ccrs.PlateCarree())
-        ax.stock_img()
-        for city in cities:
-            kord = self.get_coordinates(city)
-            enlem, boylam  = kord
-            plt.plot([boylam], [enlem], color='r', linewidth=1, marker='.', transform=ccrs.Geodetic())
-            plt.text(boylam + 3, enlem + 12, city, horizontalalignment='left', transform=ccrs.Geodetic())
-        plt.savefig(path)
-        plt.close()    
+def create_graph(self, path, cities, marker_color="red"):
+    ax = plt.axes(projection=ccrs.PlateCarree())
+    ax.stock_img()
 
+    for city in cities:
+        kord = self.get_coordinates(city)
+        enlem, boylam = kord
+
+        plt.plot(
+            [boylam], [enlem],
+            color=marker_color,
+            linewidth=1,
+            marker='o',
+            transform=ccrs.Geodetic()
+        )
+
+        plt.text(
+            boylam + 3, enlem + 12,
+            city,
+            horizontalalignment='left',
+            transform=ccrs.Geodetic()
+        )
+
+    plt.savefig(path)
+    plt.close()
     def draw_distance(self, city1, city2):
         # İki şehir arasındaki mesafeyi göstermek için bir çizgi çizme
         city1k = self.get_coordinates(city1)
