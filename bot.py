@@ -29,11 +29,12 @@ async def help_me(ctx: commands.Context):
     )
 
 @bot.command()
-async def show_city(ctx: commands.Context, *, city_name=""):
+async def show_city(ctx: commands.Context, city_name="", color="red"):
     if not city_name:
         await ctx.send("Şehir İsmini Unuttunuz!")
         return
-    manager.create_graph(f'{ctx.author.id}.png', [city_name])
+
+    manager.create_graph(f'{ctx.author.id}.png', [city_name], color)
     await ctx.send(file=discord.File(f'{ctx.author.id}.png'))
 
     # Belirtilen şehirle birlikte haritayı gösterecek komutu yazın.
